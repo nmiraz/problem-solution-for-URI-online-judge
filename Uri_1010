@@ -1,0 +1,21 @@
+#include<iostream>
+ using namespace std;
+ int main()
+ {
+     int a,b,d,e;
+     double c,f,res;
+     cin >>a>>b>>c>>d>>e>>f;
+     res = (b*c)+(e*f);
+     cout.setf(ios::fixed,ios::floatfield);
+     cout.precision(2);
+     cout << "VALOR A PAGAR: R$ "<< res<<endl;
+     return 0;
+
+ }
+ 
+ 
+ 
+/*Created By: 
+Md: Nayemul Islam (Miraz).
+Computer Science and Engineering.
+Southeast University Of Bangladesh.*/
