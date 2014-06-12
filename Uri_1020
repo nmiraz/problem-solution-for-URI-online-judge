@@ -1,0 +1,36 @@
+#include<iostream>
+ using namespace std;
+ int main()
+ {
+     int v,y=0,m=0,d=0;
+     cin >> v;
+     if(v<30)
+    {
+        d=v;
+        cout << y<<" ano(s)"<<endl<<m<<" mes(es)"<<endl<<d<<" dia(s)"<<endl;
+    }
+        else if(v<365 && v>30)
+         {
+           m=v/30;
+           d=v%30;
+        cout << y<<" ano(s)"<<endl<<m<<" mes(es)"<<endl<<d<<" dia(s)"<<endl;
+         }
+        else
+            {
+            y=v/365;
+            v= v-(y*365);
+            m=(v/30);
+            d=v-(m*30);
+            cout<< y<<" ano(s)"<<endl<<m<<" mes(es)"<<endl<<d<<" dia(s)"<<endl;
+            }
+            return 0;
+
+      }
+
+
+
+
+/*Created By: 
+Md: Nayemul Islam (Miraz).
+Computer Science and Engineering.
+Southeast University Of Bangladesh.*/
