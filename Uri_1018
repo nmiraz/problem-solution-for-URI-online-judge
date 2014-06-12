@@ -1,0 +1,26 @@
+#include<iostream>
+   using namespace std;
+int main()
+  {
+      int a=100.00,b=50,c=20,d=10,e=5,f=2,g=1;
+      int h,i,j,k,l,m,n,o;
+      cin >>h;
+          i=h/a;
+          j=(h%a)/b;
+          k=((h%a)%b)/c;
+          l=(((h%a)%b)%c)/d;
+          m=(((((h%a)%b)%c)%d)/e);
+          n=((((((h%a)%b)%c)%d)%e)/f);
+          o=(((((((h%a)%b)%c)%d)%e)%f)/g);
+          cout.setf(ios::fixed,ios::floatfield);
+          cout.precision(2);
+          cout <<i<<" nota(s) de R$ "<<a<<endl<<j<<" nota(s) de R$ "<<b<<".00"<<endl<<k<<" nota(s) de R$ "<<c<<".00"<<endl<<l<<" nota(s) de R$ "<<d<<".00"<<endl<<m<<" nota(s) de R$ "<<e<<".00"<<endl<<n<<" nota(s) de R$ "<<f<<".00"<<endl<<o<<" nota(s) de R$ "<<g<<".00"<<endl;
+          return 0;
+  }
+  
+  
+  
+/*Created By: 
+Md: Nayemul Islam (Miraz).
+Computer Science and Engineering.
+Southeast University Of Bangladesh.*/
