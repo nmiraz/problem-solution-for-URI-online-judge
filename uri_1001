@@ -8,3 +8,9 @@
       cout << "X"<<" = "<<X<<endl;
       return 0;
   }
+
+
+/*Created By: 
+Md: Nayemul Islam (Miraz).
+Computer Science and Engineering.
+Southeast University Of Bangladesh.*/
