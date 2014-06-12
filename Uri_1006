@@ -1,0 +1,19 @@
+#include<iostream>
+   using namespace std;
+    int main()
+    {
+       float a,b,c,MEDIA;
+       cin >> a>>b>>c;
+       MEDIA= (a*2+b*3+c*5)/(2+3+5);
+       cout.setf(ios::fixed,ios::floatfield);
+       cout.precision(1);
+       cout << "MEDIA"<<" = "<<MEDIA<<endl;
+       return 0;
+    }
+
+
+/*Created By: 
+Md: Nayemul Islam (Miraz).
+Computer Science and Engineering.
+Southeast University Of Bangladesh.*/
+
