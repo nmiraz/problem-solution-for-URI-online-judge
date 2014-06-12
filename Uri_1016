@@ -1,0 +1,17 @@
+#include<iostream>
+  using namespace std;
+  int  main()
+  {
+      int t;
+      cin >> t;
+      cout << t*2<<" minutos"<<endl;
+      return 0;
+
+  }
+  
+  
+  
+/*Created By: 
+Md: Nayemul Islam (Miraz).
+Computer Science and Engineering.
+Southeast University Of Bangladesh.*/
