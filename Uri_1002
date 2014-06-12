@@ -1,0 +1,20 @@
+#include<iostream>
+#include<cstdio>
+  using namespace std;
+  int main()
+  {
+      double R,pi=3.14159;
+      cin >> R;
+      double A=pi*(R*R);
+    cout.setf(ios::fixed,ios::floatfield);
+    cout.precision(4);
+      cout <<"A="<<A<<endl;
+      return 0;
+
+  }
+  
+
+/*Created By: 
+Md: Nayemul Islam (Miraz).
+Computer Science and Engineering.
+Southeast University Of Bangladesh.*/
