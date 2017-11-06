@@ -1,0 +1,188 @@
+int xPin = A1;
+int yPin = A0;
+int buttonPin = 2;
+int throttole_out_left = 10;
+int throttole_out_right = 11;
+int service_led = 16;
+// Relay Pinout Defined
+int relay_left_forward_p = 13;
+int relay_left_forward_n = 12;
+
+int relay_left_reverse_p = 9;
+int relay_left_reverse_n = 8;
+
+int relay_right_forward_p = 7;
+int relay_right_forward_n = 6;
+
+int relay_right_reverse_p = 5;
+int relay_right_reverse_n = 4;
+////
+int xPosition = 0;
+int yPosition = 0;
+int buttonState = 0;
+int state = 1;
+int count = 0;
+int temp_back = 1;
+int temp_left = 1;
+int temp_right = 1;
+
+void setup() {
+  // initialize serial communications at 9600 bps:
+  Serial.begin(9600); 
+  
+  pinMode(xPin, INPUT);
+  pinMode(yPin, INPUT);
+  pinMode(throttole_out_left, OUTPUT);
+  pinMode(throttole_out_right, OUTPUT);
+  pinMode(service_led, OUTPUT);
+  
+  // Relay Setup as Output
+  pinMode(relay_left_forward_p, OUTPUT);   
+  pinMode(relay_left_forward_n, OUTPUT);  
+  
+  pinMode(relay_left_reverse_p, OUTPUT);   
+  pinMode(relay_left_reverse_n, OUTPUT);  
+  
+  pinMode(relay_right_forward_p, OUTPUT);   
+  pinMode(relay_right_forward_n, OUTPUT);  
+  
+  pinMode(relay_right_reverse_p, OUTPUT);   
+  pinMode(relay_right_reverse_n, OUTPUT);
+  ///
+  //activate pull-up resistor on the push-button pin
+  pinMode(buttonPin, INPUT_PULLUP); 
+  all_stop();
+}
+
+void loop() {
+  xPosition = analogRead(xPin);
+  yPosition = analogRead(yPin);
+  buttonState = digitalRead(buttonPin);
+  
+  
+  // When Joystick Pushbutton is pressed then all motor are stopped.
+  if(buttonState == 0)
+     {
+        count++;
+        delay(400);
+     }
+  if(count%2 == 1)
+     {
+       state = 0;
+     }
+  if(count%2 == 0)
+     {
+       state = 1;
+     }
+  // All function are stop
+  if(state == 0)
+     {
+       digitalWrite(service_led, LOW);
+       analogWrite(throttole_out_left, 0);
+       analogWrite(throttole_out_right, 0);
+     }
+  
+  if(state == 1)
+    {
+        digitalWrite(service_led, HIGH);
+//        Serial.print("X: ");
+//        Serial.print(xPosition);
+//        Serial.print(" | Y: ");
+//        Serial.print(yPosition);
+//        Serial.print(" | Button: ");
+//        Serial.println(buttonState);
+//        Serial.println(count);
+        // When Joystick are pushed the direction of front then all motor are rotate to go front
+        if(xPosition >= 530 && yPosition<520 && yPosition >490)
+           {
+             // Stop all reverse relay to provide power
+             digitalWrite(relay_left_reverse_p,HIGH);
+             digitalWrite(relay_left_reverse_n,HIGH);
+             digitalWrite(relay_right_reverse_p,HIGH);
+             digitalWrite(relay_right_reverse_n,HIGH);
+             // Start all forward relay to provide power
+             digitalWrite(relay_left_forward_p,LOW);
+             digitalWrite(relay_left_forward_n,LOW);
+             digitalWrite(relay_right_forward_p,LOW);
+             digitalWrite(relay_right_forward_n,LOW);
+             // Set speed for two motor controller
+             analogWrite(throttole_out_left, xPosition);
+             analogWrite(throttole_out_right, xPosition);
+           }
+           
+           
+        // When Joystick are pushed the direction of down then all motor are rotate to go back
+        else if(xPosition <= 490 && yPosition<520 && yPosition >490)
+           {
+             // Stop all forward relay to provide power
+             digitalWrite(relay_left_forward_p,HIGH);
+             digitalWrite(relay_left_forward_n,HIGH);
+             digitalWrite(relay_right_forward_p,HIGH);
+             digitalWrite(relay_right_forward_n,HIGH);
+             // Start all reverse relay to provide power 
+             digitalWrite(relay_left_reverse_p,LOW);
+             digitalWrite(relay_left_reverse_n,LOW);
+             digitalWrite(relay_right_reverse_p,LOW);
+             digitalWrite(relay_right_reverse_n,LOW);
+             // Set speed for two motor controller
+             analogWrite(throttole_out_left, (490-xPosition));
+             analogWrite(throttole_out_right, (490-xPosition));
+           }
+           
+        // When joystick are pushed right then right motor will be stopped and left motor will be run
+        else if(yPosition >= 530 && xPosition<520 && xPosition >490)
+        {
+          // Stop all reverse relay to provide power
+          digitalWrite(relay_left_reverse_p,HIGH);
+          digitalWrite(relay_left_reverse_n,HIGH);
+          digitalWrite(relay_right_reverse_p,HIGH);
+          digitalWrite(relay_right_reverse_n,HIGH);
+          // Start all forward relay to provide power
+          digitalWrite(relay_left_forward_p,LOW);
+          digitalWrite(relay_left_forward_n,LOW);
+          digitalWrite(relay_right_forward_p,HIGH);
+          digitalWrite(relay_right_forward_n,HIGH);
+          // Set speed for two motor controller
+          analogWrite(throttole_out_right, 0); 
+          analogWrite(throttole_out_left, yPosition); 
+        }
+        
+        // When joystick are pushed left then left motor will be stopped and right motor will be run
+        else if(yPosition <= 490 && xPosition<520 && xPosition >490)
+        {
+          // Stop all reverse relay to provide power
+          digitalWrite(relay_left_reverse_p,HIGH);
+          digitalWrite(relay_left_reverse_n,HIGH);
+          digitalWrite(relay_right_reverse_p,HIGH);
+          digitalWrite(relay_right_reverse_n,HIGH);
+          // Start all forward relay to provide power
+          digitalWrite(relay_left_forward_p,HIGH);
+          digitalWrite(relay_left_forward_n,HIGH);
+          digitalWrite(relay_right_forward_p,LOW);
+          digitalWrite(relay_right_forward_n,LOW);
+          // Set speed for two motor controller
+          analogWrite(throttole_out_left, 0);
+          analogWrite(throttole_out_right, (490-yPosition));  
+        } 
+        else
+        {
+          all_stop();
+          analogWrite(throttole_out_left, 0);
+          analogWrite(throttole_out_right, 0);
+        }
+
+     }
+
+}
+// This Function is Used for all motor are stopped.
+void all_stop()
+{
+  digitalWrite(relay_left_forward_p,HIGH);
+  digitalWrite(relay_left_forward_n,HIGH);
+  digitalWrite(relay_right_forward_p,HIGH);
+  digitalWrite(relay_right_forward_n,HIGH); 
+  digitalWrite(relay_left_reverse_p,HIGH);
+  digitalWrite(relay_left_reverse_n,HIGH);
+  digitalWrite(relay_right_reverse_p,HIGH);
+  digitalWrite(relay_right_reverse_n,HIGH);
+}
